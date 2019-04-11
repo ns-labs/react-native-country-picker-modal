@@ -82,7 +82,10 @@ export default class CountryPicker extends Component {
     hideAlphabetFilter: PropTypes.bool,
     renderFilter: PropTypes.func,
     showCallingCode: PropTypes.bool,
-    filterOptions: PropTypes.object
+    filterOptions: PropTypes.object,
+    noResultMessage: PropTypes.string,
+    resultTextStyle: PropTypes.object
+
   }
 
   static defaultProps = {
@@ -92,7 +95,7 @@ export default class CountryPicker extends Component {
     filterPlaceholder: 'Filter',
     autoFocusFilter: true,
     transparent: false,
-    animationType: 'none'
+    animationType: 'none',
   }
 
   static renderEmojiFlag(cca2, emojiStyle) {
@@ -155,7 +158,8 @@ export default class CountryPicker extends Component {
       cca2List: countryList,
       dataSource: ds.cloneWithRows(countryList),
       filter: '',
-      letters: this.getLetters(countryList)
+      letters: this.getLetters(countryList),
+      isResultFound : true
     }
 
     if (this.props.styles) {
@@ -285,11 +289,22 @@ export default class CountryPicker extends Component {
     const filteredCountries =
       value === '' ? this.state.cca2List : this.fuse.search(value)
 
-    this._listView.scrollTo({ y: 0 })
+    if(this._listView != null) {
+      this._listView.scrollTo({ y: 0 })
+    }
 
+    if(filteredCountries.length == 0 || filteredCountries.length < 0){
+      this.setState({
+        isResultFound : false 
+      })
+    } else {
+      this.setState({
+        isResultFound : true 
+      })
+    }
     this.setState({
       filter: value,
-      dataSource: ds.cloneWithRows(filteredCountries)
+      dataSource: ds.cloneWithRows(filteredCountries) 
     })
   }
 
@@ -404,6 +419,7 @@ export default class CountryPicker extends Component {
               {this.props.filterable && this.renderFilter()}
             </View>
             <KeyboardAvoidingView behavior="padding">
+            {this.state.isResultFound ? 
               <View style={styles.contentContainer}>
                 <ListView
                   keyboardShouldPersistTaps="always"
@@ -429,6 +445,11 @@ export default class CountryPicker extends Component {
                   </ScrollView>
                 )}
               </View>
+              : 
+              <View style={styles.contentContainer}>
+               <Text style={[countryPickerStyles.letterText,{color:'white',marginHorizontal:50,marginVertical:30},this.props.resultTextStyle]}>{this.props.noResultMessage}</Text>
+              </View>
+            }
             </KeyboardAvoidingView>
           </SafeAreaView>
         </Modal>
