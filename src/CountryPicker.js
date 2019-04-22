@@ -376,6 +376,7 @@ export default class CountryPicker extends Component {
         style={[styles.input, !this.props.closeable && styles.inputOnly]}
         onChangeText={onChange}
         value={value}
+        keyboardAppearance={this.props.keyboardAppearance}
       />
     )
   }
