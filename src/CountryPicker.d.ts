@@ -383,6 +383,7 @@ export interface CountryPickerProps {
    */
   hideAlphabetFilter?: boolean
   /**
+<<<<<<< HEAD
    *  No result message, by default 'Result Not Found'
    */
   noResultMessage?: string
@@ -390,6 +391,11 @@ export interface CountryPickerProps {
    *  Result message style (see source code)
    */
   resultTextStyle?: StyleProp<ViewStyle>
+=======
+   * If set, then country name will appear next to flag in the view
+   */
+  showCountryNameWithFlag?: boolean
+>>>>>>> c6ba65ef12ec6c65f129ac41ffa610c38f779d5d
   /**
    * If 'filterable={true}' and renderFilter function is provided, render custom filter component.*
    */
