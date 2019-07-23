@@ -82,13 +82,9 @@ export default class CountryPicker extends Component {
     renderFilter: PropTypes.func,
     showCallingCode: PropTypes.bool,
     filterOptions: PropTypes.object,
-<<<<<<< HEAD
     noResultMessage: PropTypes.string,
-    resultTextStyle: PropTypes.object
-
-=======
+    resultTextStyle: PropTypes.object,
     showCountryNameWithFlag: PropTypes.bool
->>>>>>> c6ba65ef12ec6c65f129ac41ffa610c38f779d5d
   }
 
   static defaultProps = {
@@ -308,14 +304,7 @@ export default class CountryPicker extends Component {
   handleFilterChange = value => {
     const filteredCountries =
       value === '' ? this.state.cca2List : this.fuse.search(value)
-<<<<<<< HEAD
-
-    if(this._listView != null) {
-      this._listView.scrollTo({ y: 0 })
-    }
-=======
     this._flatList.scrollToOffset({ offset: 0 });
->>>>>>> c6ba65ef12ec6c65f129ac41ffa610c38f779d5d
 
     if(filteredCountries.length == 0 || filteredCountries.length < 0){
       this.setState({
@@ -328,12 +317,8 @@ export default class CountryPicker extends Component {
     }
     this.setState({
       filter: value,
-<<<<<<< HEAD
-      dataSource: ds.cloneWithRows(filteredCountries) 
-=======
       dataSource: filteredCountries,
       flatListMap: filteredCountries.map(n => ({ key: n }))
->>>>>>> c6ba65ef12ec6c65f129ac41ffa610c38f779d5d
     })
   }
 
