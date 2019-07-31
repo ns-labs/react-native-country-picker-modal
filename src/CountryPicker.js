@@ -359,8 +359,8 @@ export default class CountryPicker extends Component {
     return (
       <View style={styles.itemCountry}>
         {!this.props.hideCountryFlag && CountryPicker.renderFlag(cca2)}
-        <View style={styles.itemCountryName}>
-          <Text style={styles.countryName} allowFontScaling>
+        <View style={[styles.itemCountryName, { alignItems: 'center' }]}>
+          <Text style={[styles.countryName, { textAlign: 'center' }]} allowFontScaling>
             {this.getCountryName(country)}
           </Text>
           {this.props.showCallingCode &&
