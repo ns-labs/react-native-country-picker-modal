@@ -25,14 +25,14 @@ export default StyleSheet.create({
     marginLeft: '15%'
   },
   touchFlag: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 19
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
+    // height: 19
   },
   imgStyle: {
     resizeMode: 'contain',
     width: 25,
-    height: 19,
+    // height: 19,
     borderWidth: 1 / PixelRatio.get(),
     borderColor: '#eee',
     opacity: 0.8
@@ -41,8 +41,8 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 30,
-    width: 30,
-    height: 30,
+    // width: 30,
+    // height: 30,
     borderWidth: 1 / PixelRatio.get(),
     borderColor: 'transparent',
     backgroundColor: 'transparent'
@@ -51,23 +51,28 @@ export default StyleSheet.create({
     flexDirection: 'row',
     height: getHeightPercent(7),
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingHorizontal: 5
   },
   itemCountryFlag: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: '7%',
+    // height: '7%',
     width: '15%'
   },
   itemCountryName: {
-    justifyContent: 'center',
-    width: '70%',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    width: '100%',
     borderBottomWidth: 2 / PixelRatio.get(),
-    borderBottomColor: '#ccc',
-    height: 20
+    borderBottomColor: '#ccc'
+
   },
   countryName: {
     fontSize: getHeightPercent(2.2)
+  },
+  countryCode: {
+    textAlign: 'right'
   },
   scrollView: {
     flex: 1
