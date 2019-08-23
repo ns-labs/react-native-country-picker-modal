@@ -1,4 +1,4 @@
-import { StyleSheet, PixelRatio } from 'react-native'
+import { StyleSheet, PixelRatio, Platform } from 'react-native'
 import { getHeightPercent } from './ratio'
 
 export default StyleSheet.create({
@@ -32,7 +32,11 @@ export default StyleSheet.create({
   imgStyle: {
     resizeMode: 'contain',
     width: 25,
-    // height: 19,
+    ...Platform.select({ // https://facebook.github.io/react-native/docs/platform-specific-code
+			android: {
+				height: 19
+			},
+		}),
     borderWidth: 1 / PixelRatio.get(),
     borderColor: '#eee',
     opacity: 0.8
