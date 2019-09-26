@@ -368,7 +368,6 @@ export default class CountryPicker extends Component {
   }
 
   renderCountryDetail(cca2) {
-      console.warn('styles.flagStyle ', styles)
     const country = countries[cca2]
     return (
       <View style={styles.itemCountry}>
