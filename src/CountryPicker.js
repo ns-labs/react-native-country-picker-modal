@@ -211,8 +211,8 @@ export default class CountryPicker extends Component {
     )
   }
 
-    componentDidUpdate(prevProps) {
-        if(prevProps.countryList !== this.props.countryList){
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.countryList !== this.props.countryList) {
             this.setState({
                 cca2List: this.props.countryList,
                 dataSource: this.props.countryList
@@ -297,13 +297,14 @@ export default class CountryPicker extends Component {
     if (position + this.visibleListHeight > this.listHeight) {
       position = this.listHeight - this.visibleListHeight
     }
-
+    if(this._flatList)
     this._flatList.scrollToIndex({ index });
   }
 
   handleFilterChange = value => {
     const filteredCountries =
       value === '' ? this.state.cca2List : this.fuse.search(value)
+    if(this._flatList)
     this._flatList.scrollToOffset({ offset: 0 });
 
     if(filteredCountries.length == 0 || filteredCountries.length < 0){
