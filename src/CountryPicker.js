@@ -19,6 +19,7 @@ import {
 } from 'react-native'
 
 import Fuse from 'fuse.js'
+import { Input } from "react-native-elements"
 
 import cca2List from '../data/cca2.json'
 import { getHeightPercent } from './ratio'
@@ -240,11 +241,22 @@ export default class CountryPicker extends Component {
     this.setState({
       modalVisible: false,
       filter: '',
-      dataSource: this.state.cca2List
+      dataSource: this.state.cca2List,
+      flatListMap: this.state.cca2List.map(n => ({ key: n }))
     })
     if (this.props.onClose) {
       this.props.onClose()
     }
+  }
+
+  onClearFilter = () => {
+      const filteredCountries = this.state.cca2List
+      this.setState({
+        filter: '',
+        isResultFound : true,
+        dataSource: filteredCountries,
+        flatListMap: filteredCountries.map(n => ({ key: n }))
+      })
   }
 
   getCountryName(country, optionalTranslation) {
@@ -359,7 +371,7 @@ export default class CountryPicker extends Component {
     const country = countries[cca2]
     return (
       <View style={styles.itemCountry}>
-        {!this.props.hideCountryFlag && CountryPicker.renderFlag(cca2,null,null,styles.flagStyle)}
+        {!this.props.hideCountryFlag && CountryPicker.renderFlag(cca2,null,null,styles.imgStyle)}
         <View style={styles.itemCountryName}>
           <Text style={styles.countryName} allowFontScaling>
             {this.getCountryName(country)}
@@ -387,14 +399,41 @@ export default class CountryPicker extends Component {
     return renderFilter ? (
       renderFilter({ value, onChange, onClose })
     ) : (
-      <TextInput
+      <Input
         testID="text-input-country-filter"
         autoFocus={autoFocusFilter}
         autoCorrect={false}
         placeholder={filterPlaceholder}
         placeholderTextColor={filterPlaceholderTextColor}
-        style={[styles.input, !this.props.closeable && styles.inputOnly]}
+        inputStyle={[
+            styles.input,
+            {
+                minHeight: 34,
+                paddingLeft: 15
+            }
+        ]}
+        inputContainerStyle={[
+            {
+                borderBottomWidth: 0,
+                justifyContent: "center",
+                paddingVertical: 2,
+                minHeight: 34
+            }
+        ]}
+        containerStyle={[!this.props.closeable && styles.inputOnly, 
+            { 
+                justifyContent: 'center',
+                height: 34,
+                paddingVertical: 2,
+                paddingHorizontal: 0,
+                width: '80%' 
+            }
+        ]}
         onChangeText={onChange}
+        rightIcon={
+            value ?
+            this.props.rightIcon : null
+        }
         value={value}
         keyboardAppearance={this.props.keyboardAppearance}
       />
@@ -433,7 +472,10 @@ export default class CountryPicker extends Component {
           visible={this.state.modalVisible}
           onRequestClose={() => this.setState({ modalVisible: false })}
         >
-          <SafeAreaView style={styles.modalContainer}>
+          <SafeAreaView 
+            style={styles.modalContainer} 
+            forceInset={{ bottom: 'never' }}
+          >
             <View style={styles.header}>
               {this.props.closeable && (
                 <CloseButton
@@ -452,6 +494,7 @@ export default class CountryPicker extends Component {
                   data={this.state.flatListMap}
                   ref={flatList => (this._flatList = flatList)}
                   initialNumToRender={30}
+                  contentContainerStyle={[this.props.containerStyle]}
                   renderItem={country => this.renderCountry(country.item.key)}
                   keyExtractor={(item) => item.key}
                   onScrollToIndexFailed={()=> {
