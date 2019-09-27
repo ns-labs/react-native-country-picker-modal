@@ -409,7 +409,7 @@ export default class CountryPicker extends Component {
             styles.input,
             {
                 minHeight: 34,
-                paddingLeft: 0
+                paddingLeft: 15
             }
         ]}
         inputContainerStyle={[
@@ -417,11 +417,18 @@ export default class CountryPicker extends Component {
                 borderBottomWidth: 0,
                 justifyContent: "center",
                 paddingVertical: 2,
-                paddingLeft: 0,
                 minHeight: 34
             }
         ]}
-        containerStyle={[styles.input, !this.props.closeable && styles.inputOnly, { justifyContent: 'center' }]}
+        containerStyle={[!this.props.closeable && styles.inputOnly, 
+            { 
+                justifyContent: 'center',
+                height: 34,
+                paddingVertical: 2,
+                paddingHorizontal: 0,
+                width: '80%' 
+            }
+        ]}
         onChangeText={onChange}
         rightIcon={
             value ?
@@ -465,7 +472,10 @@ export default class CountryPicker extends Component {
           visible={this.state.modalVisible}
           onRequestClose={() => this.setState({ modalVisible: false })}
         >
-          <SafeAreaView style={styles.modalContainer}>
+          <SafeAreaView 
+            style={styles.modalContainer} 
+            forceInset={{ bottom: 'never' }}
+          >
             <View style={styles.header}>
               {this.props.closeable && (
                 <CloseButton
@@ -484,6 +494,7 @@ export default class CountryPicker extends Component {
                   data={this.state.flatListMap}
                   ref={flatList => (this._flatList = flatList)}
                   initialNumToRender={30}
+                  contentContainerStyle={[this.props.containerStyle]}
                   renderItem={country => this.renderCountry(country.item.key)}
                   keyExtractor={(item) => item.key}
                   onScrollToIndexFailed={()=> {
