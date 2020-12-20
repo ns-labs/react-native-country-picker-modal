@@ -474,7 +474,7 @@ export default class CountryPicker extends Component {
         >
           <SafeAreaView 
             style={styles.modalContainer} 
-            forceInset={{ bottom: 'never', top: 44 }}
+            forceInset={[{ bottom: 'never' }, Platform.OS === 'ios' ? { top: 44 } : {}]}
           >
             <View style={styles.header}>
               {this.props.closeable && (
