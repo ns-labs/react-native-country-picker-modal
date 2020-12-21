@@ -18,6 +18,7 @@ const CloseButton = props => {
             : TouchableNativeFeedback.SelectableBackgroundBorderless()
         }
         onPress={props.onPress}
+        hitSlop={{top: 15, bottom: 15, left: 15, right: 15}}
       >
         <View>
           <Image source={closeImage} style={props.styles[1]} />
