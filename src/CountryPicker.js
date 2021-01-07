@@ -15,7 +15,8 @@ import {
   TextInput,
   FlatList,
   ScrollView,
-  Platform
+  Platform,
+  Dimensions
 } from 'react-native'
 
 import Fuse from 'fuse.js'
@@ -53,6 +54,42 @@ const setCountries = flagType => {
 }
 
 setCountries()
+
+const getResolvedDimensions = () => {
+  const { width, height } = Dimensions.get('window');
+  if (width === 0 && height === 0) return Dimensions.get('screen');
+  return { width, height };
+};
+
+const { height: D_HEIGHT, width: D_WIDTH } = getResolvedDimensions();
+
+const X_WIDTH = 375;
+const X_HEIGHT = 812;
+const XSMAX_WIDTH = 414;
+const XSMAX_HEIGHT = 896;
+const IPHONE12_H = 844;
+const IPHONE12_Max = 926;
+const IPHONE12_Mini = 780;
+
+const isIPhoneX = (() => {
+  if (Platform.OS === 'web') return false;
+
+  return (
+    (Platform.OS === 'ios' &&
+      ((D_HEIGHT === X_HEIGHT && D_WIDTH === X_WIDTH) ||
+      (D_HEIGHT === X_WIDTH && D_WIDTH === X_HEIGHT))) ||
+      ((D_HEIGHT === XSMAX_HEIGHT && D_WIDTH === XSMAX_WIDTH) ||
+      (D_HEIGHT === XSMAX_WIDTH && D_WIDTH === XSMAX_HEIGHT)) ||
+      (D_HEIGHT === IPHONE12_H) || (D_HEIGHT === IPHONE12_Max) || (D_HEIGHT === IPHONE12_Mini)
+  );
+})();
+
+const statusBarHeight = () => {
+  if (isIPhoneX) {
+    return 44;
+  }
+  return 20;
+};
 
 export const getAllCountries = () =>
   cca2List.map(cca2 => ({ ...countries[cca2], cca2 }))
@@ -474,7 +511,7 @@ export default class CountryPicker extends Component {
         >
           <SafeAreaView 
             style={styles.modalContainer} 
-            forceInset={{ bottom: 'never', top: Platform.OS === "ios" ? 44 : 0 }}
+            forceInset={{ bottom: 'never', top: Platform.OS === "ios" ? statusBarHeight() : 0 }}
           >
             <View style={styles.header}>
               {this.props.closeable && (
