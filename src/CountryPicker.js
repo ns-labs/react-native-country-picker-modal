@@ -463,7 +463,7 @@ export default class CountryPicker extends Component {
                 height: 34,
                 paddingVertical: 2,
                 paddingHorizontal: 0,
-                width: '80%' 
+                width: '84%' 
             }
         ]}
         onChangeText={onChange}
