@@ -445,8 +445,9 @@ export default class CountryPicker extends Component {
         inputStyle={[
             styles.input,
             {
-                minHeight: 34,
-                paddingLeft: 15
+              minHeight: 34,
+              paddingLeft: 15,
+              marginRight:60
             }
         ]}
         inputContainerStyle={[
@@ -462,8 +463,7 @@ export default class CountryPicker extends Component {
                 justifyContent: 'center',
                 height: 34,
                 paddingVertical: 2,
-                paddingHorizontal: 0,
-                width: '84%' 
+                paddingHorizontal: 0
             }
         ]}
         onChangeText={onChange}
